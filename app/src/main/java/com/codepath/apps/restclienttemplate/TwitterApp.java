@@ -12,11 +12,11 @@ import android.content.Context;
  * including the image cache in memory and on disk. This also adds a singleton
  * for accessing the relevant rest client.
  *
- *     RestClient client = RestApplication.getRestClient();
+ *     TwitterClient client = TwitterApp.getRestClient();
  *     // use client to send requests to API
  *
  */
-public class RestApplication extends Application {
+public class TwitterApp extends Application {
 	private static Context context;
 
 	@Override
@@ -26,10 +26,10 @@ public class RestApplication extends Application {
 		FlowManager.init(new FlowConfig.Builder(this).build());
 		FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
-		RestApplication.context = this;
+		TwitterApp.context = this;
 	}
 
-	public static RestClient getRestClient() {
-		return (RestClient) RestClient.getInstance(RestClient.class, RestApplication.context);
+	public static TwitterClient getRestClient() {
+		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, TwitterApp.context);
 	}
 }
