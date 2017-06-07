@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.helpers;
 
 import android.content.Context;
 import android.content.res.Resources;

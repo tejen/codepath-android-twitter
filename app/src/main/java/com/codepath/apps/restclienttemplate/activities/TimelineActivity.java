@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,6 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 
+import com.codepath.apps.restclienttemplate.helpers.DividerItemDecoration;
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.helpers.TweetAdapter;
+import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
+import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

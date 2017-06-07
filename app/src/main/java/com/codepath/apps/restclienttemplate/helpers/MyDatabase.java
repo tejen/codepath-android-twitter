@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.helpers;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

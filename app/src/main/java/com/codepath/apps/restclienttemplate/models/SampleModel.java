@@ -1,6 +1,6 @@
 package com.codepath.apps.restclienttemplate.models;
 
-import com.codepath.apps.restclienttemplate.MyDatabase;
+import com.codepath.apps.restclienttemplate.helpers.MyDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
