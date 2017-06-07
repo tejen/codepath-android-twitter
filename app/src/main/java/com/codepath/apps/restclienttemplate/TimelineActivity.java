@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -29,23 +30,15 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+
+
         client = TwitterApp.getRestClient();
 
-        // find the RecyclerView
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
-
-        // init the arraylist (data source)
-        tweets = new ArrayList<>();
-
-
-        // construct the adapter from this datasource
-        tweetAdapter = new TweetAdapter(tweets);
-
-        // RecyclerView setup (layout manager, use adapter)
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-
-        // set the adapter
-        rvTweets.setAdapter(tweetAdapter);
+        rvTweets = (RecyclerView) findViewById(R.id.rvTweet); // find the RecyclerView
+        tweets = new ArrayList<>(); // init the arraylist (data source)
+        tweetAdapter = new TweetAdapter(tweets); // construct the adapter from this datasource
+        rvTweets.setLayoutManager(new LinearLayoutManager(this)); // RecyclerView setup (layout manager, use adapter)
+        rvTweets.setAdapter(tweetAdapter); // set the adapter
 
         populateTimeline();
     }
