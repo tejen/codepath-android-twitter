@@ -1,5 +1,8 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
 import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -14,13 +17,24 @@ import cz.msebera.android.httpclient.Header;
  * Created by tejen on 6/6/17.
  */
 
-public class User {
+public class User implements Parcelable {
 
     // list the attributes
     public String name;
     public long uid;
     public String screenName;
     public String profileImageUrl;
+
+    public User() {
+
+    }
+
+    private User(Parcel in) {
+        name = in.readString();
+        uid = in.readLong();
+        screenName = in.readString();
+        profileImageUrl = in.readString();
+    }
 
     // deserialize JSON
     public static User fromJSON(JSONObject jsonObject) throws JSONException {
@@ -33,6 +47,33 @@ public class User {
         user.profileImageUrl = jsonObject.getString("profile_image_url");
 
         return user;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<User> CREATOR
+            = new Parcelable.Creator<User>() {
+
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeLong(uid);
+        out.writeString(screenName);
+        out.writeString(profileImageUrl);
     }
 
     public interface UserCallbackInterface {
