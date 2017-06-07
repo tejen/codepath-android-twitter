@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_refresh"
-        android:title="@string/compose_label"
-        android:icon="@drawable/compose"
+        android:id="@+id/action_compose"
         android:actionLayout="@layout/action_view_button"
+        android:icon="@drawable/compose"
+        android:title="@string/compose_label"
         app:showAsAction="always" />
 </menu>

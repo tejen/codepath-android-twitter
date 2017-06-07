@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
-import com.codepath.apps.restclienttemplate.helpers.DividerItemDecoration;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.helpers.DividerItemDecoration;
 import com.codepath.apps.restclienttemplate.helpers.TweetAdapter;
 import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
 import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
@@ -56,6 +58,17 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // set onClick listener for Compose button in menu
+        menu.findItem(R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivity(i);
+                return true;
+            }
+        });
+
         return true;
     }
 
