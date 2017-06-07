@@ -31,7 +31,6 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
 
@@ -42,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
         tweetAdapter = new TweetAdapter(tweets); // construct the adapter from this datasource
         rvTweets.setLayoutManager(new LinearLayoutManager(this)); // RecyclerView setup (layout manager, use adapter)
         rvTweets.setAdapter(tweetAdapter); // set the adapter
+
+        rvTweets.addItemDecoration(new DividerItemDecoration(this));
 
         populateTimeline();
     }
