@@ -1,5 +1,8 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,13 +15,24 @@ import java.util.Locale;
  * Created by tejen on 6/6/17.
  */
 
-public class Tweet {
+public class Tweet implements Parcelable {
 
     // list out the attributes
     public String body;
     public long uid; // database ID for the tweet
     public User user;
     public Date createdAt;
+
+    private Tweet(Parcel in) {
+        body = in.readString();
+        uid= in.readLong();
+        user = in.readParcelable(getClass().getClassLoader());
+        createdAt = new Date(in.readLong());
+    }
+
+    public Tweet() {
+
+    }
 
     // deserialize JSON
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException{
@@ -63,4 +77,30 @@ public class Tweet {
         return Math.round(diff / 604800) + "w";
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(body);
+        out.writeLong(uid);
+        out.writeParcelable(user, flags);
+        out.writeLong(createdAt.getTime());
+    }
+
+    public static final Parcelable.Creator<Tweet> CREATOR
+            = new Parcelable.Creator<Tweet>() {
+
+        @Override
+        public Tweet createFromParcel(Parcel in) {
+            return new Tweet(in);
+        }
+
+        @Override
+        public Tweet[] newArray(int size) {
+            return new Tweet[size];
+        }
+    };
 }
