@@ -127,14 +127,11 @@ public class TimelineActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == COMPOSE_RESULT_CODE && requestCode == COMPOSE_REQUEST_CODE) {
-            if(data.getStringExtra("newTweet").equals("created")) {
-                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
-                tweetAdapter.clear();
-                tweets.clear();
-                populateTimeline();
-            } else {
-                Toast.makeText(this, "Error posting new Tweet", Toast.LENGTH_LONG).show();
-            }
+            Tweet newTweet = (Tweet) data.getParcelableExtra("newTweet");
+            tweets.add(0, newTweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.getLayoutManager().scrollToPosition(0);
+            Toast.makeText(this, "Posted New Tweet!", Toast.LENGTH_SHORT).show();
         }
     }
 }

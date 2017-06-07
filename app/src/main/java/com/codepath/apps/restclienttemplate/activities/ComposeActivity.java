@@ -72,7 +72,7 @@ public class ComposeActivity extends AppCompatActivity {
                         }
 
                         Intent i = new Intent();
-                        i.putExtra("newTweet", "created");
+                        i.putExtra("newTweet", newTweet);
                         setResult(COMPOSE_RESULT_CODE, i);
                         finish();
                     }
