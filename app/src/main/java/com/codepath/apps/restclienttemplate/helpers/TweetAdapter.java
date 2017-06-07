@@ -72,12 +72,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             super(itemView);
 
             // perform findViewById lookups
-
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvAge = (TextView) itemView.findViewById(R.id.tvAge);
         }
+    }
+
+    public void clear() {
+        int size = this.mTweets.size();
+        this.mTweets.clear();
+        notifyItemRangeRemoved(0, size);
     }
 
 }

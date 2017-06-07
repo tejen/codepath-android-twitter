@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.helpers.DividerItemDecoration;
@@ -33,6 +34,9 @@ public class TimelineActivity extends AppCompatActivity {
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
 
+    private final int COMPOSE_REQUEST_CODE = 10;
+    private final int COMPOSE_RESULT_CODE = 20;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,8 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.addItemDecoration(new DividerItemDecoration(this));
 
         populateTimeline();
+        Log.d("MyApp", "I am here");
+        Log.wtf("here a tag", "there a tag");
     }
 
     @Override
@@ -64,7 +70,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-                startActivity(i);
+                startActivityForResult(i, COMPOSE_REQUEST_CODE);
                 return true;
             }
         });
@@ -114,5 +120,21 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == COMPOSE_RESULT_CODE && requestCode == COMPOSE_REQUEST_CODE) {
+            if(data.getStringExtra("newTweet").equals("created")) {
+                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
+                tweetAdapter.clear();
+                tweets.clear();
+                populateTimeline();
+            } else {
+                Toast.makeText(this, "Error posting new Tweet", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
