@@ -2,13 +2,10 @@ package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -41,8 +38,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(org.tejen.codepathandroid.twitter.R.layout.activity_timeline);
 
-        getSupportActionBar().setCustomView(org.tejen.codepathandroid.twitter.R.layout.actionbar_title);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
 
         client = TwitterApp.getRestClient();
 
@@ -59,23 +55,23 @@ public class TimelineActivity extends AppCompatActivity {
         Log.wtf("here a tag", "there a tag");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(org.tejen.codepathandroid.twitter.R.menu.menu_main, menu);
-
-        // set onClick listener for Compose button in menu
-        menu.findItem(org.tejen.codepathandroid.twitter.R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-                startActivityForResult(i, COMPOSE_REQUEST_CODE);
-                return true;
-            }
-        });
-
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(org.tejen.codepathandroid.twitter.R.menu.menu_main, menu);
+//
+//        // set onClick listener for Compose button in menu
+//        menu.findItem(org.tejen.codepathandroid.twitter.R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+//                startActivityForResult(i, COMPOSE_REQUEST_CODE);
+//                return true;
+//            }
+//        });
+//
+//        return true;
+//    }
 
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
