@@ -11,16 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import org.tejen.codepathandroid.twitter.views.DividerItemDecoration;
-import org.tejen.codepathandroid.twitter.adapters.TweetAdapter;
-import org.tejen.codepathandroid.twitter.TwitterApp;
-import org.tejen.codepathandroid.twitter.data.TwitterClient;
-import org.tejen.codepathandroid.twitter.data.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tejen.codepathandroid.twitter.TwitterApp;
+import org.tejen.codepathandroid.twitter.adapters.TweetAdapter;
+import org.tejen.codepathandroid.twitter.data.Tweet;
+import org.tejen.codepathandroid.twitter.data.TwitterClient;
+import org.tejen.codepathandroid.twitter.views.DividerItemDecoration;
 
 import java.util.ArrayList;
 
