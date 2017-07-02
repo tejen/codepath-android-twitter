@@ -1,8 +1,8 @@
-package com.codepath.apps.restclienttemplate.helpers;
+package org.tejen.codepathandroid.twitter.helpers;
 
 import android.content.Context;
 
-import com.codepath.apps.restclienttemplate.R;
+import com.tejen.codepathandroid.twitter.R;
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;

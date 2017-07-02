@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.models;
+package org.tejen.codepathandroid.twitter.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

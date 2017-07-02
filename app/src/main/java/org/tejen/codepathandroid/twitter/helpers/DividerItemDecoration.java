@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.helpers;
+package org.tejen.codepathandroid.twitter.helpers;
 
 import android.content.Context;
 import android.content.res.Resources;

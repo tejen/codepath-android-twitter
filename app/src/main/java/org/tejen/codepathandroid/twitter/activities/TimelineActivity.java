@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.activities;
+package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.helpers.DividerItemDecoration;
-import com.codepath.apps.restclienttemplate.helpers.TweetAdapter;
-import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
-import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
-import com.codepath.apps.restclienttemplate.models.Tweet;
+import org.tejen.codepathandroid.twitter.helpers.DividerItemDecoration;
+import org.tejen.codepathandroid.twitter.helpers.TweetAdapter;
+import org.tejen.codepathandroid.twitter.helpers.TwitterApp;
+import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
+import org.tejen.codepathandroid.twitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -40,14 +39,14 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+        setContentView(com.tejen.codepathandroid.twitter.R.layout.activity_timeline);
 
-        getSupportActionBar().setCustomView(R.layout.actionbar_title);
+        getSupportActionBar().setCustomView(com.tejen.codepathandroid.twitter.R.layout.actionbar_title);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
 
         client = TwitterApp.getRestClient();
 
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweet); // find the RecyclerView
+        rvTweets = (RecyclerView) findViewById(com.tejen.codepathandroid.twitter.R.id.rvTweet); // find the RecyclerView
         tweets = new ArrayList<>(); // init the arraylist (data source)
         tweetAdapter = new TweetAdapter(tweets); // construct the adapter from this datasource
         rvTweets.setLayoutManager(new LinearLayoutManager(this)); // RecyclerView setup (layout manager, use adapter)
@@ -63,10 +62,10 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(com.tejen.codepathandroid.twitter.R.menu.menu_main, menu);
 
         // set onClick listener for Compose button in menu
-        menu.findItem(R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.findItem(com.tejen.codepathandroid.twitter.R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);

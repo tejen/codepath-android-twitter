@@ -1,12 +1,12 @@
-package com.codepath.apps.restclienttemplate.activities;
+package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
+import com.tejen.codepathandroid.twitter.R;
+import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {

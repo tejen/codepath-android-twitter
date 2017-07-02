@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.activities;
+package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
-import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
-import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.codepath.apps.restclienttemplate.models.User;
+import org.tejen.codepathandroid.twitter.helpers.TwitterApp;
+import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
+import org.tejen.codepathandroid.twitter.models.Tweet;
+import org.tejen.codepathandroid.twitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -38,16 +37,16 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
+        setContentView(com.tejen.codepathandroid.twitter.R.layout.activity_compose);
 
         getSupportActionBar().setTitle("Compose");
 
         client = TwitterApp.getRestClient();
 
-        tvUsername = (TextView) findViewById(R.id.tvUsername);
-        ivUserphoto = (ImageView) findViewById(R.id.ivUserphoto);
-        etBody = (EditText) findViewById(R.id.etBody);
-        buttonCompose = (Button) findViewById(R.id.buttonCompose);
+        tvUsername = (TextView) findViewById(com.tejen.codepathandroid.twitter.R.id.tvUsername);
+        ivUserphoto = (ImageView) findViewById(com.tejen.codepathandroid.twitter.R.id.ivUserphoto);
+        etBody = (EditText) findViewById(com.tejen.codepathandroid.twitter.R.id.etBody);
+        buttonCompose = (Button) findViewById(com.tejen.codepathandroid.twitter.R.id.buttonCompose);
 
         User.getCurrentUser(new User.UserCallbackInterface() {
             @Override

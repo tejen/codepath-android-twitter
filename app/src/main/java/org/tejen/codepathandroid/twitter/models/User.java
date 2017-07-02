@@ -1,10 +1,10 @@
-package com.codepath.apps.restclienttemplate.models;
+package org.tejen.codepathandroid.twitter.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.codepath.apps.restclienttemplate.helpers.TwitterApp;
-import com.codepath.apps.restclienttemplate.helpers.TwitterClient;
+import org.tejen.codepathandroid.twitter.helpers.TwitterApp;
+import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
