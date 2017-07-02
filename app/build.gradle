@@ -8,6 +8,7 @@ android {
         applicationId "org.tejen.codepathandroid.twitter"
         minSdkVersion 17
         targetSdkVersion 25
+        vectorDrawables.useSupportLibrary = true
     }
 
     // Related to https://github.com/scribejava/scribejava/issues/480
