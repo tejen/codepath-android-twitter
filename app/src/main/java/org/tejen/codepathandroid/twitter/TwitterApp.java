@@ -1,4 +1,4 @@
-package org.tejen.codepathandroid.twitter.helpers;
+package org.tejen.codepathandroid.twitter;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
@@ -6,6 +6,8 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 import android.app.Application;
 import android.content.Context;
+
+import org.tejen.codepathandroid.twitter.data.TwitterClient;
 
 /*
  * This is the Android application itself and is used to configure various settings

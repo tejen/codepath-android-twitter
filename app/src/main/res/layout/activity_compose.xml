@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.restclienttemplate.com.tejen.apps.restclienttemplate.activities.ComposeActivity">
+    tools:context="org.tejen.codepathandroid.twitter.activities.ComposeActivity">
 
     <ImageView
         android:id="@+id/ivUserphoto"

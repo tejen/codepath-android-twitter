@@ -1,15 +1,14 @@
-package org.tejen.codepathandroid.twitter.models;
+package org.tejen.codepathandroid.twitter.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.tejen.codepathandroid.twitter.helpers.TwitterApp;
-import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tejen.codepathandroid.twitter.TwitterApp;
 
 import cz.msebera.android.httpclient.Header;
 

@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import org.tejen.codepathandroid.twitter.helpers.TwitterApp;
-import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
-import org.tejen.codepathandroid.twitter.models.Tweet;
-import org.tejen.codepathandroid.twitter.models.User;
+import org.tejen.codepathandroid.twitter.TwitterApp;
+import org.tejen.codepathandroid.twitter.data.TwitterClient;
+import org.tejen.codepathandroid.twitter.data.Tweet;
+import org.tejen.codepathandroid.twitter.data.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -37,16 +37,16 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.tejen.codepathandroid.twitter.R.layout.activity_compose);
+        setContentView(org.tejen.codepathandroid.twitter.R.layout.activity_compose);
 
         getSupportActionBar().setTitle("Compose");
 
         client = TwitterApp.getRestClient();
 
-        tvUsername = (TextView) findViewById(com.tejen.codepathandroid.twitter.R.id.tvUsername);
-        ivUserphoto = (ImageView) findViewById(com.tejen.codepathandroid.twitter.R.id.ivUserphoto);
-        etBody = (EditText) findViewById(com.tejen.codepathandroid.twitter.R.id.etBody);
-        buttonCompose = (Button) findViewById(com.tejen.codepathandroid.twitter.R.id.buttonCompose);
+        tvUsername = (TextView) findViewById(org.tejen.codepathandroid.twitter.R.id.tvUsername);
+        ivUserphoto = (ImageView) findViewById(org.tejen.codepathandroid.twitter.R.id.ivUserphoto);
+        etBody = (EditText) findViewById(org.tejen.codepathandroid.twitter.R.id.etBody);
+        buttonCompose = (Button) findViewById(org.tejen.codepathandroid.twitter.R.id.buttonCompose);
 
         User.getCurrentUser(new User.UserCallbackInterface() {
             @Override

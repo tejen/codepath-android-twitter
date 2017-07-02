@@ -1,14 +1,15 @@
-package org.tejen.codepathandroid.twitter.helpers;
+package org.tejen.codepathandroid.twitter.data;
 
 import android.content.Context;
 
-import com.tejen.codepathandroid.twitter.R;
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.tejen.codepathandroid.twitter.R;
 
 /*
  * 

@@ -1,4 +1,4 @@
-package org.tejen.codepathandroid.twitter.helpers;
+package org.tejen.codepathandroid.twitter.data;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

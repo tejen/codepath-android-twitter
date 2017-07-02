@@ -1,4 +1,4 @@
-package org.tejen.codepathandroid.twitter.models;
+package org.tejen.codepathandroid.twitter.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package org.tejen.codepathandroid.twitter.helpers;
+package org.tejen.codepathandroid.twitter.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tejen.codepathandroid.twitter.R;
-import org.tejen.codepathandroid.twitter.models.Tweet;
+import org.tejen.codepathandroid.twitter.R;
+import org.tejen.codepathandroid.twitter.data.Tweet;
 
 import java.util.List;
 

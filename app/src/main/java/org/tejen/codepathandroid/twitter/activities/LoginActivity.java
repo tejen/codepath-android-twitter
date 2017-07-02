@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-import com.tejen.codepathandroid.twitter.R;
-import org.tejen.codepathandroid.twitter.helpers.TwitterClient;
+import org.tejen.codepathandroid.twitter.R;
+import org.tejen.codepathandroid.twitter.data.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {

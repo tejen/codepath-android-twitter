@@ -1,4 +1,4 @@
-package org.tejen.codepathandroid.twitter.helpers;
+package org.tejen.codepathandroid.twitter.views;
 
 import android.content.Context;
 import android.content.res.Resources;
