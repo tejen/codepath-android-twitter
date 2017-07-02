@@ -23,6 +23,11 @@
         <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
     </style>
 
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/primary_blue</item>
         <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
