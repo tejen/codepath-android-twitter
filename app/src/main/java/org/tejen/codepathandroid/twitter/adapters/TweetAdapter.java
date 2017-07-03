@@ -76,6 +76,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvUserScreenname;
         public TextView tvBody;
         public TextView tvAge;
+        public TextView tvRetweetCount;
+        public TextView tvFavoriteCount;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -86,6 +88,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvUserScreenname = (TextView) itemView.findViewById(R.id.tvUserScreenname);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvAge = (TextView) itemView.findViewById(R.id.tvAge);
+            tvRetweetCount = (TextView) itemView.findViewById(R.id.tvRetweetCount);
+            tvFavoriteCount = (TextView) itemView.findViewById(R.id.tvFavoriteCount);
         }
     }
 
