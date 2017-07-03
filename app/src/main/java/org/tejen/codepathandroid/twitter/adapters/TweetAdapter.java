@@ -101,4 +101,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public Tweet getAt(int position) {
+        return this.mTweets.get(position);
+    }
+
 }
