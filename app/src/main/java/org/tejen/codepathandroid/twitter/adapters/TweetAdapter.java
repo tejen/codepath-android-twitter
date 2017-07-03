@@ -1,6 +1,7 @@
 package org.tejen.codepathandroid.twitter.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.data.Tweet;
 
@@ -49,10 +51,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         // populate the views according to this data
         holder.tvUsername.setText(tweet.user.name);
+        holder.tvUserScreenname.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.tvAge.setText(tweet.getRelativeTimeAgo());
 
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.ivProfileImage.setClipToOutline(true);
+            holder.tvBody.setLetterSpacing((float) 0.01);
+        }
     }
 
     @Override
@@ -65,6 +73,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivProfileImage;
         public TextView tvUsername;
+        public TextView tvUserScreenname;
         public TextView tvBody;
         public TextView tvAge;
 
@@ -74,6 +83,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             // perform findViewById lookups
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
+            tvUserScreenname = (TextView) itemView.findViewById(R.id.tvUserScreenname);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvAge = (TextView) itemView.findViewById(R.id.tvAge);
         }
