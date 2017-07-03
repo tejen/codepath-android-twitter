@@ -1,9 +1,10 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimaryDark">@color/twitter_blue</item>
+        <item name="android:colorPrimaryDark">@android:color/black</item>
     </style>
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- API 14 theme customizations can go here. -->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="colorPrimaryDark">@color/twitter_blue</item>
         <item name="android:statusBarColor">@color/twitter_blue</item>
     </style>
 </resources>

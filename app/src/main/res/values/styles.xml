@@ -2,6 +2,7 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
