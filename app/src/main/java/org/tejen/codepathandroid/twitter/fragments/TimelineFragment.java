@@ -1,5 +1,6 @@
 package org.tejen.codepathandroid.twitter.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -16,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.TwitterApp;
+import org.tejen.codepathandroid.twitter.activities.MainActivity;
 import org.tejen.codepathandroid.twitter.adapters.TweetAdapter;
 import org.tejen.codepathandroid.twitter.data.Tweet;
 import org.tejen.codepathandroid.twitter.data.TwitterClient;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineFragment extends Fragment {
+public class TimelineFragment extends Fragment implements MainActivity.TweetUpdateListener {
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private TwitterClient client;
@@ -51,6 +54,18 @@ public class TimelineFragment extends Fragment {
 
         populateTimeline();
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity) context).registerDataUpdateListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity) getActivity()).unregisterDataUpdateListener(this);
     }
 
     private void populateTimeline() {
@@ -94,6 +109,13 @@ public class TimelineFragment extends Fragment {
                 throwable.printStackTrace();
             }
         });
+    }
 
+    @Override
+    public void onComposedNewTweet(Tweet newTweet) {
+        tweets.add(0, newTweet);
+        tweetAdapter.notifyItemInserted(0);
+        rvTweets.getLayoutManager().scrollToPosition(0);
+        Toast.makeText(getActivity(), "Posted New Tweet!", Toast.LENGTH_SHORT).show();
     }
 }

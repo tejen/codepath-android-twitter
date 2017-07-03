@@ -1,5 +1,6 @@
 package org.tejen.codepathandroid.twitter.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,17 +11,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.adapters.TwitterFragmentPagerAdapter;
+import org.tejen.codepathandroid.twitter.data.Tweet;
+
+import java.util.ArrayList;
 
 /**
  * Created by tejen on 7/2/17.
  */
 
 public class MainActivity extends AppCompatActivity {
+
+    public interface TweetUpdateListener {
+        void onComposedNewTweet(Tweet newTweet);
+    }
+
     private final int COMPOSE_REQUEST_CODE = 10;
     private final int COMPOSE_RESULT_CODE = 20;
+
+    private ArrayList<TweetUpdateListener> mListeners;
 
     private int[] tabIconsSelected = {
             R.drawable.ic_vector_home,
@@ -80,6 +92,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        mListeners = new ArrayList<>();
+    }
+
+    public synchronized void registerDataUpdateListener(TweetUpdateListener listener) {
+        mListeners.add(listener);
+    }
+
+    public synchronized void unregisterDataUpdateListener(TweetUpdateListener listener) {
+        mListeners.remove(listener);
+    }
+
+    public synchronized void dataUpdated(Tweet newTweet) {
+        for (TweetUpdateListener listener : mListeners) {
+            listener.onComposedNewTweet(newTweet);
+        }
     }
 
     @Override
@@ -101,8 +129,18 @@ public class MainActivity extends AppCompatActivity {
 //        startActivityForResult(i, COMPOSE_REQUEST_CODE);
     }
 
-//    public void onComposeAction(MenuItem mi) {
-//        Intent i = new Intent(MainActivity.this, ComposeActivity.class);
-//        startActivityForResult(i, COMPOSE_REQUEST_CODE);
-//    }
+    public void onComposeAction(View v) {
+        Intent i = new Intent(MainActivity.this, ComposeActivity.class);
+        startActivityForResult(i, COMPOSE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == COMPOSE_RESULT_CODE && requestCode == COMPOSE_REQUEST_CODE) {
+            Tweet newTweet = (Tweet) data.getParcelableExtra("newTweet");
+            dataUpdated(newTweet);
+        }
+    }
 }
