@@ -7,5 +7,8 @@
     <string name="intent_host">cprest</string>
     <string name="compose_label">Compose</string>
     <string name="compose_hint">Write a new tweet...</string>
+    <string name="welcome_to_twitter">Welcome to Twitter</string>
+    <string name="welcome_description">See what\'s happening in the world right now</string>
+    <string name="twitter_logo_content_description">Twitter Logo</string>
 
 </resources>
