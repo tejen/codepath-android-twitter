@@ -1,21 +1,34 @@
 package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.adapters.TwitterFragmentPagerAdapter;
 import org.tejen.codepathandroid.twitter.data.Tweet;
+import org.tejen.codepathandroid.twitter.data.User;
+import org.tejen.codepathandroid.twitter.fragments.SimpleNavigationDrawerFragment;
 
 import java.util.ArrayList;
 
@@ -34,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<TweetUpdateListener> mListeners;
 
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+    private TabLayout tabLayout;
+
+    private ImageView ivProfileImage;
+    private TextView tvUserName;
+    private TextView tvUserScreenname;
+
     private int[] tabIconsSelected = {
             R.drawable.ic_vector_home,
             R.drawable.ic_vector_search,
@@ -48,19 +71,47 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.ic_vector_messages_stroke
     };
 
-    TabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_twitter_logo_vector);
         getSupportActionBar().setTitle("Home");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+
+        // Find our drawer view
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        mDrawer.addDrawerListener(drawerToggle);
+
+        // Find our drawer view
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Setup drawer view
+        setupDrawerContent(nvDrawer);
+
+        View headerLayout = nvDrawer.getHeaderView(0);
+        ivProfileImage = (ImageView) headerLayout.findViewById(R.id.ivProfileImage);
+        tvUserName = (TextView) headerLayout.findViewById(R.id.tvUserName);
+        tvUserScreenname = (TextView) headerLayout.findViewById(R.id.tvUserScreenname);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ivProfileImage.setClipToOutline(true);
+        }
+        User.getCurrentUser(new User.UserCallbackInterface() {
+            @Override
+            public void onUserAvailable(User currentUser) {
+                Glide.with(getBaseContext()).load(currentUser.profileImageUrl).into(ivProfileImage);
+                tvUserName.setText(currentUser.name);
+                tvUserScreenname.setText("@"+currentUser.screenName);
+            }
+        });
+        tvUserScreenname.setText("test screenname");
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -94,6 +145,80 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mListeners = new ArrayList<>();
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
+        // and will not render the hamburger icon without it.
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    // `onPostCreate` called when activity start-up is complete after `onStart()`
+    // NOTE 1: Make sure to override the method with only a single `Bundle` argument
+    // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
+    // There are 2 signatures and only `onPostCreate(Bundle state)` shows the hamburger icon.
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+        Class fragmentClass = SimpleNavigationDrawerFragment.class;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        // The action bar home/up action should open or close the drawer.
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                mDrawer.openDrawer(GravityCompat.START);
+//                return true;
+//        }
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public synchronized void registerDataUpdateListener(TweetUpdateListener listener) {

@@ -16,5 +16,9 @@
     <string name="gif">GIF</string>
     <string name="location">Location</string>
     <string name="_140">140</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="dummy_screenname">\@TejenPatel</string>
+    <string name="dummy_name">Tejen Patel</string>
 
 </resources>
