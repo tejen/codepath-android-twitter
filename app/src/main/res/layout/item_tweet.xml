@@ -63,7 +63,7 @@
         android:textColor="@android:color/black" />
 
     <ImageButton
-        android:id="@+id/buttonReply"
+        android:id="@+id/buttonRetweet"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_alignParentBottom="true"
@@ -75,27 +75,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="-4dp"
         android:paddingBottom="9dp"
-        app:srcCompat="@drawable/vector_compose_dm_fab" />
-
-    <TextView
-        android:id="@+id/tvReplyCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="-1dp"
-        android:layout_toRightOf="@id/buttonReply"
-        android:layout_alignTop="@id/buttonReply"
-        android:textSize="12sp"
-        android:text="3" />
-
-    <ImageView
-        android:id="@+id/buttonRetweet"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:tint="@color/twitter_gray"
-        android:layout_marginLeft="24dp"
-        android:layout_toRightOf="@id/tvReplyCount"
-        android:layout_alignTop="@id/buttonReply"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
     <TextView
@@ -125,8 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="-1dp"
-        android:layout_toRightOf="@id/buttonFavorite"
-        android:layout_alignTop="@id/buttonFavorite"
+        android:layout_toRightOf="@+id/buttonFavorite"
+        android:layout_alignTop="@+id/tvRetweetCount"
         android:textSize="12sp"
         android:text="3" />
 
@@ -139,5 +118,15 @@
         android:layout_toRightOf="@id/tvFavoriteCount"
         android:layout_alignTop="@id/buttonFavorite"
         app:srcCompat="@drawable/ic_vector_messages_stroke" />
+
+    <ImageView
+        android:id="@+id/buttonReply"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:tint="@color/twitter_gray"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/buttonMessage"
+        android:layout_alignTop="@+id/buttonMessage"
+        app:srcCompat="@drawable/vector_compose_dm_fab" />
 
 </RelativeLayout>
