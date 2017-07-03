@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import org.tejen.codepathandroid.twitter.fragments.NotificationsFragment;
 import org.tejen.codepathandroid.twitter.fragments.TimelineFragment;
 
 /**
@@ -28,7 +29,12 @@ public class TwitterFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TimelineFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return new TimelineFragment();
+            default:
+                return NotificationsFragment.newInstance(position + 1);
+        }
     }
 
     @Override
