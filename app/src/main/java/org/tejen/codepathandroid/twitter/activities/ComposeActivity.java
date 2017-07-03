@@ -11,14 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import org.tejen.codepathandroid.twitter.TwitterApp;
-import org.tejen.codepathandroid.twitter.data.TwitterClient;
-import org.tejen.codepathandroid.twitter.data.Tweet;
-import org.tejen.codepathandroid.twitter.data.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tejen.codepathandroid.twitter.TwitterApp;
+import org.tejen.codepathandroid.twitter.data.Tweet;
+import org.tejen.codepathandroid.twitter.data.TwitterClient;
+import org.tejen.codepathandroid.twitter.data.User;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -39,7 +39,7 @@ public class ComposeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(org.tejen.codepathandroid.twitter.R.layout.activity_compose);
 
-        getSupportActionBar().setTitle("Compose");
+//        getSupportActionBar().setTitle("Compose");
 
         client = TwitterApp.getRestClient();
 
