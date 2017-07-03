@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--When implementing this on a view, use the backgroundTint of the view to define the border color of yourview -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <stroke
         android:width="1dp"

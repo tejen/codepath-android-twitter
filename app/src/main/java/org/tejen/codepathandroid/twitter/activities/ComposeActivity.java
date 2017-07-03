@@ -1,12 +1,15 @@
 package org.tejen.codepathandroid.twitter.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.TwitterApp;
 import org.tejen.codepathandroid.twitter.data.Tweet;
 import org.tejen.codepathandroid.twitter.data.TwitterClient;
@@ -26,10 +30,11 @@ import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    TextView tvUsername;
-    ImageView ivUserphoto;
-    EditText etBody;
-    Button buttonCompose;
+    ImageView ivProfileImage;
+    RequiredEditText etBody;
+    TextView tvCharacterCount;
+    Button buttonTweet;
+    Boolean formEnabled;
 
     private TwitterClient client;
     private final int COMPOSE_RESULT_CODE = 20;
@@ -37,28 +42,31 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.tejen.codepathandroid.twitter.R.layout.activity_compose);
-
-//        getSupportActionBar().setTitle("Compose");
+        setContentView(R.layout.activity_compose);
 
         client = TwitterApp.getRestClient();
 
-        tvUsername = (TextView) findViewById(org.tejen.codepathandroid.twitter.R.id.tvUsername);
-        ivUserphoto = (ImageView) findViewById(org.tejen.codepathandroid.twitter.R.id.ivUserphoto);
-        etBody = (EditText) findViewById(org.tejen.codepathandroid.twitter.R.id.etBody);
-        buttonCompose = (Button) findViewById(org.tejen.codepathandroid.twitter.R.id.buttonCompose);
+        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        etBody = (RequiredEditText ) findViewById(R.id.etBody);
+        tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
+        buttonTweet = (Button) findViewById(R.id.buttonTweet);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ivProfileImage.setClipToOutline(true);
+        }
 
         User.getCurrentUser(new User.UserCallbackInterface() {
             @Override
             public void onUserAvailable(User currentUser) {
-                tvUsername.setText(currentUser.name);
-                Glide.with(getContext()).load(currentUser.profileImageUrl).into(ivUserphoto);
+                Glide.with(getContext()).load(currentUser.profileImageUrl).into(ivProfileImage);
             }
         });
 
-        buttonCompose.setOnClickListener(new View.OnClickListener() {
+        buttonTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!formEnabled) return;
+                setTweetButtonEnabled(false);
                 client.postTweet(etBody.getText().toString(), new JsonHttpResponseHandler()  {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -80,10 +88,40 @@ public class ComposeActivity extends AppCompatActivity {
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                         Log.d("DEBUG", errorResponse.toString());
-
+                        setTweetButtonEnabled(true);
                     }
                 });
             }
         });
+
+        etBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvCharacterCount.setText(Integer.toString(140 - etBody.length()));
+                tvCharacterCount.setTextColor(etBody.length() > 10 ?
+                        ResourcesCompat.getColor(getResources(), R.color.twitter_red, null) :
+                        ResourcesCompat.getColor(getResources(), R.color.twitter_gray, null));
+                setTweetButtonEnabled(etBody.length() > 0 && etBody.length() <= 140);
+            }
+        });
+
+        setTweetButtonEnabled(false);
+    }
+
+    private void setTweetButtonEnabled(boolean enabled) {
+        formEnabled = enabled;
+        buttonTweet.setEnabled(enabled);
+        buttonTweet.setAlpha((float) (enabled ? 1 : 0.6));
+    }
+
+    public void onCancelAction(View view) {
+        finish();
     }
 }
+

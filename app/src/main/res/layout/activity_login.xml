@@ -48,7 +48,7 @@
             app:layout_widthPercent="60%"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/rounded_corner"
+            android:background="@drawable/pill_hollow"
             android:onClick="loginToRest"
             android:text="@string/login_label"
             android:textAllCaps="false"

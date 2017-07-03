@@ -1,61 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.tejen.codepathandroid.twitter.activities.ComposeActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/white">
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="org.tejen.codepathandroid.twitter.activities.ComposeActivity">
 
-    <ImageView
-        android:id="@+id/ivUserphoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher" />
+            <!--android:id="@+id/ivUserphoto"-->
+            <ImageButton
+                android:id="@+id/ibCancel"
+                android:layout_width="72dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="14dp"
+                android:background="@android:color/transparent"
+                android:onClick="onCancelAction"
+                android:tint="@color/twitter_blue"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vector_close" />
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/ivUserphoto"
-        app:layout_constraintRight_toLeftOf="@+id/buttonCompose"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/circular_profile_image"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonCompose"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Tweet"
-        app:layout_constraintBottom_toBottomOf="@+id/ivUserphoto"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+            <!--android:id="@+id/buttonCompose"-->
 
-    <EditText
-        android:id="@+id/etBody"
-        android:layout_width="334dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="0dp"
-        android:ems="10"
-        android:hint="Compose a new tweet..."
-        android:inputType="textMultiLine"
-        android:maxLength="140"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivUserphoto"
-        app:layout_constraintVertical_bias="0.0" />
-</android.support.constraint.ConstraintLayout>
+            <org.tejen.codepathandroid.twitter.activities.RequiredEditText
+                android:id="@+id/etBody"
+                android:layout_width="334dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/what_s_happening"
+                android:inputType="textMultiLine"
+                android:textColor="@color/twitter_gray"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivProfileImage" />
+
+        </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+
+    <!--toolbar near keyboard-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/twitter_lightgray"
+        android:elevation="3dp"
+        tools:targetApi="lollipop">
+
+        <ImageButton
+            android:id="@+id/buttonPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:tint="@color/twitter_blue"
+            app:srcCompat="@drawable/ic_vector_photo_stroke"
+            android:contentDescription="@string/media" />
+
+        <ImageButton
+            android:id="@+id/buttonGIF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:background="@android:color/transparent"
+            android:tint="@color/twitter_blue"
+            app:srcCompat="@drawable/ic_vector_gif_pill_stroke"
+            android:contentDescription="@string/gif"
+            android:layout_alignTop="@+id/buttonPhoto"
+            android:layout_toEndOf="@+id/buttonPhoto" />
+
+        <ImageButton
+            android:id="@+id/buttonLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/transparent"
+            android:tint="@color/twitter_blue"
+            app:srcCompat="@drawable/ic_vector_location_stroke"
+            android:contentDescription="@string/location"
+            android:layout_alignTop="@+id/buttonGIF"
+            android:layout_toEndOf="@+id/buttonGIF" />
+
+        <TextView
+            android:id="@+id/tvCharacterCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:layout_toStartOf="@+id/buttonTweet"
+            android:gravity="center_vertical|end"
+            android:text="@string/_140"
+            android:textColor="@color/twitter_gray" />
+
+        <Button
+            android:id="@+id/buttonTweet"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/pill_filled"
+            android:text="@string/tweet_action"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</LinearLayout>

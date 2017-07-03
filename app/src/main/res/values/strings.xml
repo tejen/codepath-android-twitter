@@ -10,5 +10,11 @@
     <string name="welcome_to_twitter">Welcome to Twitter</string>
     <string name="welcome_description">See what\'s happening in the world right now</string>
     <string name="twitter_logo_content_description">Twitter Logo</string>
+    <string name="what_s_happening">What\'s happening?</string>
+    <string name="tweet_action">Tweet</string>
+    <string name="media">Media</string>
+    <string name="gif">GIF</string>
+    <string name="location">Location</string>
+    <string name="_140">140</string>
 
 </resources>
