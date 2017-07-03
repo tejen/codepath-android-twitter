@@ -64,23 +64,17 @@ public class TimelineActivity extends AppCompatActivity {
         Log.wtf("here a tag", "there a tag");
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(org.tejen.codepathandroid.twitter.R.menu.menu_main, menu);
-//
-//        // set onClick listener for Compose button in menu
-//        menu.findItem(org.tejen.codepathandroid.twitter.R.id.action_compose).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-//                startActivityForResult(i, COMPOSE_REQUEST_CODE);
-//                return true;
-//            }
-//        });
-//
-//        return true;
-//    }
+    public void onComposeAction(MenuItem mi) {
+        Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+        startActivityForResult(i, COMPOSE_REQUEST_CODE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
+    }
 
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
