@@ -95,4 +95,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyItemRangeRemoved(0, size);
     }
 
+    // Add a list of items -- change to type used
+    public void addAll(List<Tweet> list) {
+        this.mTweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
 }

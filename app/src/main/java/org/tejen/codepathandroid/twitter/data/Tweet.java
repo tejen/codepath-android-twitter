@@ -3,11 +3,13 @@ package org.tejen.codepathandroid.twitter.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -49,6 +51,29 @@ public class Tweet implements Parcelable {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 
         return tweet;
+    }
+
+    public static ArrayList<Tweet> multipleFromJSON(JSONArray jsonArray) throws JSONException{
+        ArrayList<Tweet> tweets = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Tweet tweet = new Tweet();
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+
+            // extract the values from JSON
+            tweet.body = obj.getString("text");
+            tweet.uid = obj.getLong("id");
+            try {
+                tweet.createdAt = Tweet.parseTwitterDate(obj.getString("created_at"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            tweet.user = User.fromJSON(obj.getJSONObject("user"));
+
+            tweets.add(tweet);
+        }
+
+        return tweets;
     }
 
     public static Date parseTwitterDate(String date) throws ParseException
