@@ -40,7 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.tejen.codepathandroid.twitter.R.layout.activity_timeline);
+        setContentView(R.layout.activity_timeline);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +51,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient();
 
-        rvTweets = (RecyclerView) findViewById(org.tejen.codepathandroid.twitter.R.id.rvTweet); // find the RecyclerView
+        rvTweets = (RecyclerView) findViewById(R.id.rvTweet); // find the RecyclerView
         tweets = new ArrayList<>(); // init the arraylist (data source)
         tweetAdapter = new TweetAdapter(tweets); // construct the adapter from this datasource
         rvTweets.setLayoutManager(new LinearLayoutManager(this)); // RecyclerView setup (layout manager, use adapter)
@@ -59,7 +59,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         rvTweets.addItemDecoration(new DividerItemDecoration(this));
 
-        populateTimeline();
+//        populateTimeline();
         Log.d("MyApp", "I am here");
         Log.wtf("here a tag", "there a tag");
     }
@@ -72,7 +72,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

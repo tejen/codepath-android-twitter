@@ -37,6 +37,7 @@
                     android:scheme="@string/intent_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name="org.tejen.codepathandroid.twitter.activities.MainActivity" />
         <activity android:name="org.tejen.codepathandroid.twitter.activities.TimelineActivity" />
         <activity android:name="org.tejen.codepathandroid.twitter.activities.ComposeActivity" />
     </application>
