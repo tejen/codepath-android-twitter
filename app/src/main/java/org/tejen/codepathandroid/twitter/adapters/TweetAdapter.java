@@ -50,12 +50,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = mTweets.get(position);
 
         // populate the views according to this data
-        holder.tvUsername.setText(tweet.user.name);
-        holder.tvUserScreenname.setText("@" + tweet.user.screenName);
-        holder.tvBody.setText(tweet.body);
+        holder.tvUsername.setText(tweet.getUser().name);
+        holder.tvUserScreenname.setText("@" + tweet.getUser().screenName);
+        holder.tvBody.setText(tweet.getBody());
         holder.tvAge.setText(tweet.getRelativeTimeAgo());
 
-        Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+        Glide.with(context).load(tweet.getUser().profileImageUrl).into(holder.ivProfileImage);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.ivProfileImage.setClipToOutline(true);

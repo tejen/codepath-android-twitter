@@ -20,10 +20,10 @@ import java.util.Locale;
 public class Tweet implements Parcelable {
 
     // list out the attributes
-    public String body;
-    public long uid; // database ID for the tweet
-    public User user;
-    public Date createdAt;
+    private String body;
+    private long uid; // database ID for the tweet
+    private User user;
+    private Date createdAt;
 
     private Tweet(Parcel in) {
         body = in.readString();
@@ -34,6 +34,14 @@ public class Tweet implements Parcelable {
 
     public Tweet() {
 
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getBody() {
+        return body;
     }
 
     // deserialize JSON
@@ -128,4 +136,8 @@ public class Tweet implements Parcelable {
             return new Tweet[size];
         }
     };
+
+    public long getId() {
+        return uid;
+    }
 }

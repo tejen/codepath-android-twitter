@@ -124,7 +124,7 @@ public class TimelineFragment extends Fragment implements MainActivity.TweetUpda
         if(fetchMore == false) {
             max_id = -1;
         } else {
-            max_id = tweetAdapter.getAt(tweetAdapter.getItemCount() - 1).uid;
+            max_id = tweetAdapter.getAt(tweetAdapter.getItemCount() - 1).getId();
             max_id--; // Twitter max_id param will otherwise include the tweet matching id in max_id param
         }
 
