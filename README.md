@@ -21,8 +21,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [ ] While composing a tweet, user can see a character counter with characters remaining for tweet out of 140
-* [ ] User can **pull down to refresh tweets** in either timeline.
+* [x] While composing a tweet, user can see a character counter with characters remaining for tweet out of 140
+* [x] User can **pull down to refresh tweets** in either timeline.
 * [x] Improve the user interface and theme the app to feel twitter branded with colors and styles
 * [ ] User can **search for tweets matching a particular query** and see results.
 * [ ] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
@@ -31,10 +31,10 @@ The following **optional** features are implemented:
 * [ ] User can click on a tweet to be **taken to a "detail view"** of that tweet
  * [ ] User can take favorite (and unfavorite) or retweet actions on a tweet
 * [ ] User can see embedded image media within the tweet item in list or detail view.
-* [ ] Compose activity is replaced with a modal compose overlay.
+* [x] Compose activity is replaced with a modal compose overlay.
 * [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
-* [ ] Used Parcelable instead of Serializable leveraging the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler) when passing data between activities.
-* [ ] Replaced all icon drawables and other static image assets with [vector drawables](http://guides.codepath.com/android/Drawables#vector-drawables) where appropriate.
+* [x] Used Parcelable instead of Serializable leveraging the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler) when passing data between activities.
+* [x] Replaced all icon drawables and other static image assets with [vector drawables](http://guides.codepath.com/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through the profile of a user
 * [ ] Apply the popular Butterknife annotation library to reduce view boilerplate.
 * [ ] Implement collapse scrolling effects on the Twitter profile view using `CoordinatorLayout`.
@@ -42,13 +42,13 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView). Number of tweets is unlimited.
+* [x] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView). Number of tweets is unlimited.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-[<img src='https://img.tejen.net/3c3fed955c5cf018fa287684e015e4ec.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />](https://x.tejen.net/6v9)
+[<img src='https://img.tejen.net/3dde675c86b90be5416781ca5203fe26.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />](https://x.tejen.net/dt3)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
