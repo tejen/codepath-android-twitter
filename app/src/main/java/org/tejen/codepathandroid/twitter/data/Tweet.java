@@ -3,9 +3,12 @@ package org.tejen.codepathandroid.twitter.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.tejen.codepathandroid.twitter.TwitterApp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,9 +52,21 @@ public class Tweet implements Parcelable {
     public User getUser() {
         return user;
     }
-
     public String getBody() {
         return body;
+    }
+    public long getRetweetCount() { return retweetCount; }
+    public long getFavoriteCount() { return favoriteCount; }
+    public boolean isRetweeted() { return retweeted; }
+    public boolean isFavorited() { return favorited; }
+
+    public void toggleRetweet(JsonHttpResponseHandler handler) {
+        TwitterApp.getRestClient().retweet(uid, retweeted ^= true, handler);
+        retweetCount += retweeted ? 1 : -1;
+    }
+    public void toggleFavorite(JsonHttpResponseHandler handler) {
+        TwitterApp.getRestClient().favorite(uid, favorited ^= true, handler);
+        favoriteCount += favorited ? 1 : -1;
     }
 
     // deserialize JSON
