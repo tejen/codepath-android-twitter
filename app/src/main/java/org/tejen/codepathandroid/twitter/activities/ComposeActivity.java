@@ -24,6 +24,8 @@ import org.tejen.codepathandroid.twitter.data.Tweet;
 import org.tejen.codepathandroid.twitter.data.TwitterClient;
 import org.tejen.codepathandroid.twitter.data.User;
 
+import java.text.ParseException;
+
 import cz.msebera.android.httpclient.Header;
 
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
@@ -86,6 +88,8 @@ public class ComposeActivity extends AppCompatActivity {
                         try {
                             newTweet = Tweet.fromJSON(response);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
 

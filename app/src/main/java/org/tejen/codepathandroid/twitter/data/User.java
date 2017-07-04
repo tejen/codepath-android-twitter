@@ -23,6 +23,8 @@ public class User implements Parcelable {
     public long uid;
     public String screenName;
     public String profileImageUrl;
+    public boolean verified;
+
 
     public User() {
 
@@ -44,6 +46,7 @@ public class User implements Parcelable {
         user.uid = jsonObject.getLong("id");
         user.screenName = jsonObject.getString("screen_name");
         user.profileImageUrl = jsonObject.getString("profile_image_url");
+        user.verified = jsonObject.getBoolean("verified");
 
         return user;
     }

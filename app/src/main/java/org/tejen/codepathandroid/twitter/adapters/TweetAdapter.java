@@ -90,21 +90,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = mTweets.get(position);
 
         // populate the views according to this data
-        holder.tvUsername.setText(tweet.getUser().name);
+        holder.tvUserName.setText(tweet.getUser().name);
         holder.tvUserScreenname.setText("@" + tweet.getUser().screenName);
         holder.tvBody.setText(tweet.getBody());
         holder.tvAge.setText(tweet.getRelativeTimeAgo());
         holder.tvRetweetCount.setText(Long.toString(tweet.getRetweetCount()));
         holder.tvFavoriteCount.setText(Long.toString(tweet.getFavoriteCount()));
+        holder.ivVerifiedBadge.setVisibility(tweet.getUser().verified ? View.VISIBLE : View.GONE);
         updateButton(holder.buttonRetweet, tweet.isRetweeted(), R.drawable.ic_vector_retweet_stroke, R.drawable.ic_vector_retweet, R.color.twitter_blue);
         updateButton(holder.buttonFavorite, tweet.isFavorited(), R.drawable.ic_vector_heart_stroke, R.drawable.ic_vector_heart, R.color.twitter_red);
 
-        Glide.with(context).load(tweet.getUser().profileImageUrl).into(holder.ivProfileImage);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.ivProfileImage.setClipToOutline(true);
-            holder.tvBody.setLetterSpacing((float) 0.01);
+        if(tweet.getRetweetedBy() != null) {
+            holder.ivRetweetedIcon.setVisibility(View.VISIBLE);
+            holder.tvRetweetedBy.setVisibility(View.VISIBLE);
+            holder.tvRetweetedBy.setText(tweet.getRetweetedBy().name + " Retweeted");
+        } else {
+//            holder.ivRetweetedIcon.setVisibility(View.GONE);
+//            holder.tvRetweetedBy.setVisibility(View.GONE);
         }
+
+        Glide.with(context).load(tweet.getUser().profileImageUrl).into(holder.ivProfileImage);
     }
 
     @Override
@@ -115,8 +120,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     // create ViewHolder class
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView tvRetweetedBy;
+        public ImageView ivRetweetedIcon;
         public ImageView ivProfileImage;
-        public TextView tvUsername;
+        public TextView tvUserName;
         public TextView tvUserScreenname;
         public TextView tvBody;
         public TextView tvAge;
@@ -125,13 +132,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public ImageButton buttonRetweet;
         public ImageButton buttonFavorite;
         public ImageButton buttonReply;
+        public ImageView ivVerifiedBadge;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             // perform findViewById lookups
+            tvRetweetedBy = (TextView) itemView.findViewById(R.id.tvRetweetedBy);
+            ivRetweetedIcon = (ImageView) itemView.findViewById(R.id.ivRetweetedIcon);
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
+            tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
             tvUserScreenname = (TextView) itemView.findViewById(R.id.tvUserScreenname);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvAge = (TextView) itemView.findViewById(R.id.tvAge);
@@ -140,6 +150,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             buttonRetweet = (ImageButton) itemView.findViewById(R.id.buttonRetweet);
             buttonFavorite = (ImageButton) itemView.findViewById(R.id.buttonFavorite);
             buttonReply = (ImageButton) itemView.findViewById(R.id.buttonReply);
+            ivVerifiedBadge = (ImageView) itemView.findViewById(R.id.ivVerifiedBadge);
+
+            // define standard attributes
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ivProfileImage.setClipToOutline(true);
+                tvBody.setLetterSpacing((float) 0.005);
+                tvUserScreenname.setLetterSpacing((float) -0.025);
+                tvAge.setLetterSpacing((float) -0.025);
+            }
         }
     }
 

@@ -7,13 +7,34 @@
     android:paddingBottom="9dp">
 
     <ImageView
+        android:id="@+id/ivRetweetedIcon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignEnd="@id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="6dp"
+        android:tint="@color/twitter_gray"
+        app:srcCompat="@drawable/ic_vector_retweet" />
+
+    <TextView
+        android:id="@+id/tvRetweetedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvUserName"
+        android:layout_alignTop="@+id/ivRetweetedIcon"
+        android:layout_marginTop="-4dp"
+        android:textColor="@color/twitter_gray"
+        android:text="Mahant Swami Maharaj Retweeted"
+        android:textSize="13sp" />
+
+    <ImageView
         android:id="@+id/ivProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/ivRetweetedIcon"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/circular_profile_image"
         app:srcCompat="@android:color/holo_blue_dark" />
 
@@ -21,14 +42,25 @@
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/ivProfileImage"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="-4dp"
         android:layout_toRightOf="@+id/ivProfileImage"
-        android:text="TextView"
+        android:text="BAPS"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ivVerifiedBadge"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignTop="@+id/tvUserName"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/tvUserName"
+        android:paddingTop="3dp"
+        app:srcCompat="@drawable/ic_verified_badge" />
 
     <TextView
         android:id="@+id/tvUserScreenname"
@@ -36,8 +68,20 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/tvUserName"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/tvUserName"
-        android:text="TextView"
+        android:layout_toEndOf="@id/ivVerifiedBadge"
+        android:text="\@BAPS"
+        android:textColor="@color/twitter_gray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvNameSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvUserScreenname"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="7dp"
+        android:layout_toEndOf="@id/tvUserScreenname"
+        android:text="@string/separatorSymbol"
         android:textColor="@color/twitter_gray"
         android:textSize="16sp" />
 
@@ -45,10 +89,10 @@
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tvUserScreenname"
-        android:layout_marginRight="5dp"
-        android:text="TextView"
+        android:layout_toEndOf="@id/tvNameSeparator"
+        android:text="23h"
+        android:textColor="@color/twitter_gray"
         android:textSize="16sp" />
 
     <TextView
@@ -57,7 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/tvUserName"
         android:layout_below="@+id/tvUserName"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:lineSpacingExtra="2dp"
         android:paddingRight="30dp"
         android:text="TextView"
@@ -71,8 +116,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/tvBody"
         android:layout_below="@+id/tvBody"
+        android:layout_marginBottom="-4dp"
         android:layout_marginStart="-4dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="12dp"
         android:background="@android:color/transparent"
         android:padding="0dp"
         android:scaleType="fitCenter"

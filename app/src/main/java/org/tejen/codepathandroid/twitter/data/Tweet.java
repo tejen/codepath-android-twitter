@@ -28,6 +28,8 @@ public class Tweet implements Parcelable {
     private User user;
     private Date createdAt;
 
+    private User retweetedBy;
+
     private long retweetCount;
     private boolean retweeted;
 
@@ -59,6 +61,7 @@ public class Tweet implements Parcelable {
     public long getFavoriteCount() { return favoriteCount; }
     public boolean isRetweeted() { return retweeted; }
     public boolean isFavorited() { return favorited; }
+    public User getRetweetedBy() { return retweetedBy; }
 
     public void toggleRetweet(JsonHttpResponseHandler handler) {
         TwitterApp.getRestClient().retweet(uid, retweeted ^= true, handler);
@@ -69,32 +72,31 @@ public class Tweet implements Parcelable {
         favoriteCount += favorited ? 1 : -1;
     }
 
-    // deserialize JSON
-    public static Tweet fromJSON(JSONObject jsonObject) throws JSONException{
+    // deserialize JSON & extract values from it
+    public static Tweet fromJSON(JSONObject jsonObject) throws JSONException, ParseException{
         Tweet tweet = new Tweet();
 
-        // extract the values from JSON
-        tweet.body = jsonObject.getString("text");
         tweet.uid = jsonObject.getLong("id");
-        try {
-            tweet.createdAt = Tweet.parseTwitterDate(jsonObject.getString("created_at"));
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        if(jsonObject.has("retweeted_status")) {
+            // extract all data needed from root tweet
+            tweet.retweetedBy = User.fromJSON(jsonObject.getJSONObject("user"));
+            // discard root tweet (i.e. replace it with original tweet)
+            jsonObject = jsonObject.getJSONObject("retweeted_status");
         }
+
+        tweet.body = jsonObject.getString("text");
+        tweet.createdAt = Tweet.parseTwitterDate(jsonObject.getString("created_at"));
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.retweeted = jsonObject.getBoolean("retweeted");
         tweet.favorited = jsonObject.getBoolean("favorited");
         tweet.retweetCount = jsonObject.getLong("retweet_count");
-        if(jsonObject.has("retweeted_status")) {
-            tweet.favoriteCount = jsonObject.getJSONObject("retweeted_status").getLong("favorite_count");
-        } else {
-            tweet.favoriteCount = jsonObject.getLong("favorite_count");
-        }
+        tweet.favoriteCount = jsonObject.getLong("favorite_count");
 
         return tweet;
     }
 
-    public static ArrayList<Tweet> multipleFromJSON(JSONArray jsonArray) throws JSONException{
+    public static ArrayList<Tweet> multipleFromJSON(JSONArray jsonArray) throws JSONException, ParseException{
         ArrayList<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {

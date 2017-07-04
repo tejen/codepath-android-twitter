@@ -25,6 +25,7 @@ import org.tejen.codepathandroid.twitter.data.EndlessRecyclerViewScrollListener;
 import org.tejen.codepathandroid.twitter.data.Tweet;
 import org.tejen.codepathandroid.twitter.data.TwitterClient;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -140,6 +141,8 @@ public class TimelineFragment extends Fragment implements MainActivity.TweetUpda
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
