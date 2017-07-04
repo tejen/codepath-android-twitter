@@ -1,13 +1,11 @@
 package org.tejen.codepathandroid.twitter.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 import org.tejen.codepathandroid.twitter.TwitterApp;
 
 import cz.msebera.android.httpclient.Header;
@@ -16,26 +14,21 @@ import cz.msebera.android.httpclient.Header;
  * Created by tejen on 6/6/17.
  */
 
-public class User implements Parcelable {
+@Parcel
+public class User {
 
     // list the attributes
-    public String name;
-    public long uid;
-    public String screenName;
-    public String profileImageUrl;
-    public boolean verified;
+    private String name;
+    private long uid;
+    private String screenName;
+    private String profileImageUrl;
+    private boolean isVerified;
 
-
-    public User() {
-
-    }
-
-    private User(Parcel in) {
-        name = in.readString();
-        uid = in.readLong();
-        screenName = in.readString();
-        profileImageUrl = in.readString();
-    }
+    public String getName(){ return name; }
+    public long getUid(){ return uid; }
+    public String getScreenName(){ return screenName; }
+    public String getProfileImageUrl(){ return profileImageUrl; }
+    public boolean isVerified(){ return isVerified; }
 
     // deserialize JSON
     public static User fromJSON(JSONObject jsonObject) throws JSONException {
@@ -46,36 +39,9 @@ public class User implements Parcelable {
         user.uid = jsonObject.getLong("id");
         user.screenName = jsonObject.getString("screen_name");
         user.profileImageUrl = jsonObject.getString("profile_image_url");
-        user.verified = jsonObject.getBoolean("verified");
+        user.isVerified = jsonObject.getBoolean("verified");
 
         return user;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<User> CREATOR
-            = new Parcelable.Creator<User>() {
-
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(name);
-        out.writeLong(uid);
-        out.writeString(screenName);
-        out.writeString(profileImageUrl);
     }
 
     public interface UserCallbackInterface {

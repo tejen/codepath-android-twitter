@@ -1,13 +1,11 @@
 package org.tejen.codepathandroid.twitter.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 import org.tejen.codepathandroid.twitter.TwitterApp;
 
 import java.text.ParseException;
@@ -20,7 +18,8 @@ import java.util.Locale;
  * Created by tejen on 6/6/17.
  */
 
-public class Tweet implements Parcelable {
+@Parcel
+public class Tweet {
 
     // list out the attributes
     private String body;
@@ -36,21 +35,9 @@ public class Tweet implements Parcelable {
     private long favoriteCount;
     private boolean favorited;
 
-    private Tweet(Parcel in) {
-        body = in.readString();
-        uid= in.readLong();
-        user = in.readParcelable(getClass().getClassLoader());
-        createdAt = new Date(in.readLong());
-        retweetCount = in.readLong();
-        retweeted = in.readInt() == 1;
-        favoriteCount = in.readLong();
-        favorited = in.readInt() == 1;
+    public long getId() {
+        return uid;
     }
-
-    public Tweet() {
-
-    }
-
     public User getUser() {
         return user;
     }
@@ -134,38 +121,4 @@ public class Tweet implements Parcelable {
         return Math.round(diff / 604800) + "w";
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(body);
-        out.writeLong(uid);
-        out.writeParcelable(user, flags);
-        out.writeLong(createdAt.getTime());
-        out.writeLong(retweetCount);
-        out.writeInt(favorited ? 1 : 0);
-        out.writeLong(favoriteCount);
-        out.writeLong(retweeted ? 1 : 0);
-    }
-
-    public static final Parcelable.Creator<Tweet> CREATOR
-            = new Parcelable.Creator<Tweet>() {
-
-        @Override
-        public Tweet createFromParcel(Parcel in) {
-            return new Tweet(in);
-        }
-
-        @Override
-        public Tweet[] newArray(int size) {
-            return new Tweet[size];
-        }
-    };
-
-    public long getId() {
-        return uid;
-    }
 }

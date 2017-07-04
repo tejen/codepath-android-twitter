@@ -90,26 +90,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = mTweets.get(position);
 
         // populate the views according to this data
-        holder.tvUserName.setText(tweet.getUser().name);
-        holder.tvUserScreenname.setText("@" + tweet.getUser().screenName);
+        holder.tvUserName.setText(tweet.getUser().getName());
+        holder.tvUserScreenname.setText("@" + tweet.getUser().getScreenName());
         holder.tvBody.setText(tweet.getBody());
         holder.tvAge.setText(tweet.getRelativeTimeAgo());
         holder.tvRetweetCount.setText(Long.toString(tweet.getRetweetCount()));
         holder.tvFavoriteCount.setText(Long.toString(tweet.getFavoriteCount()));
-        holder.ivVerifiedBadge.setVisibility(tweet.getUser().verified ? View.VISIBLE : View.GONE);
+        holder.ivVerifiedBadge.setVisibility(tweet.getUser().isVerified() ? View.VISIBLE : View.GONE);
         updateButton(holder.buttonRetweet, tweet.isRetweeted(), R.drawable.ic_vector_retweet_stroke, R.drawable.ic_vector_retweet, R.color.twitter_blue);
         updateButton(holder.buttonFavorite, tweet.isFavorited(), R.drawable.ic_vector_heart_stroke, R.drawable.ic_vector_heart, R.color.twitter_red);
 
         if(tweet.getRetweetedBy() != null) {
             holder.ivRetweetedIcon.setVisibility(View.VISIBLE);
             holder.tvRetweetedBy.setVisibility(View.VISIBLE);
-            holder.tvRetweetedBy.setText(tweet.getRetweetedBy().name + " Retweeted");
+            holder.tvRetweetedBy.setText(tweet.getRetweetedBy().getName() + " Retweeted");
         } else {
 //            holder.ivRetweetedIcon.setVisibility(View.GONE);
 //            holder.tvRetweetedBy.setVisibility(View.GONE);
         }
 
-        Glide.with(context).load(tweet.getUser().profileImageUrl).into(holder.ivProfileImage);
+        Glide.with(context).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfileImage);
     }
 
     @Override

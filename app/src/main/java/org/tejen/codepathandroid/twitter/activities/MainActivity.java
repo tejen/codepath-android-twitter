@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.parceler.Parcels;
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.adapters.TwitterFragmentPagerAdapter;
 import org.tejen.codepathandroid.twitter.data.Tweet;
@@ -106,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
         User.getCurrentUser(new User.UserCallbackInterface() {
             @Override
             public void onUserAvailable(User currentUser) {
-                Glide.with(getBaseContext()).load(currentUser.profileImageUrl).into(ivProfileImage);
-                tvUserName.setText(currentUser.name);
-                tvUserScreenname.setText("@"+currentUser.screenName);
+                Glide.with(getBaseContext()).load(currentUser.getProfileImageUrl()).into(ivProfileImage);
+                tvUserName.setText(currentUser.getName());
+                tvUserScreenname.setText("@"+currentUser.getScreenName());
             }
         });
         tvUserScreenname.setText("test screenname");
@@ -237,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
     public synchronized void startReplyActivity(Tweet newTweet) {
         Intent i = new Intent(MainActivity.this, ComposeActivity.class);
-        i.putExtra(Tweet.class.getName(), newTweet);
+        i.putExtra(Tweet.class.getName(), Parcels.wrap(newTweet));
         startActivityForResult(i, COMPOSE_REQUEST_CODE);
     }
 
