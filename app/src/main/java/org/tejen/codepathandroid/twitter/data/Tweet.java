@@ -67,10 +67,14 @@ public class Tweet implements Parcelable {
             e.printStackTrace();
         }
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-        tweet.retweetCount = jsonObject.getLong("retweet_count");
         tweet.retweeted = jsonObject.getBoolean("retweeted");
-        tweet.favoriteCount = jsonObject.getLong("favorite_count");
-        tweet.favorited= jsonObject.getBoolean("favorited");
+        tweet.favorited = jsonObject.getBoolean("favorited");
+        tweet.retweetCount = jsonObject.getLong("retweet_count");
+        if(jsonObject.has("retweeted_status")) {
+            tweet.favoriteCount = jsonObject.getJSONObject("retweeted_status").getLong("favorite_count");
+        } else {
+            tweet.favoriteCount = jsonObject.getLong("favorite_count");
+        }
 
         return tweet;
     }
