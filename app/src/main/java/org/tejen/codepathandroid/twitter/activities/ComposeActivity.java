@@ -104,7 +104,7 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tvCharacterCount.setText(Integer.toString(140 - etBody.length()));
-                tvCharacterCount.setTextColor(etBody.length() > 10 ?
+                tvCharacterCount.setTextColor(etBody.length() > 140 ?
                         ResourcesCompat.getColor(getResources(), R.color.twitter_red, null) :
                         ResourcesCompat.getColor(getResources(), R.color.twitter_gray, null));
                 setTweetButtonEnabled(etBody.length() > 0 && etBody.length() <= 140);
