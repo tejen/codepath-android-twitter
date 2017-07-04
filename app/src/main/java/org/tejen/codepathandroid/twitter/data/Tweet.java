@@ -79,19 +79,8 @@ public class Tweet implements Parcelable {
         ArrayList<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            Tweet tweet = new Tweet();
             JSONObject obj = (JSONObject) jsonArray.get(i);
-
-            // extract the values from JSON
-            tweet.body = obj.getString("text");
-            tweet.uid = obj.getLong("id");
-            try {
-                tweet.createdAt = Tweet.parseTwitterDate(obj.getString("created_at"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            tweet.user = User.fromJSON(obj.getJSONObject("user"));
-
+            Tweet tweet = fromJSON(obj);
             tweets.add(tweet);
         }
 
