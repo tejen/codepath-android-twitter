@@ -235,6 +235,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public synchronized void startReplyActivity(Tweet newTweet) {
+        Intent i = new Intent(MainActivity.this, ComposeActivity.class);
+        i.putExtra(Tweet.class.getName(), newTweet);
+        startActivityForResult(i, COMPOSE_REQUEST_CODE);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

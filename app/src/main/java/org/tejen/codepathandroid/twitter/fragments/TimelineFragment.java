@@ -29,8 +29,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineFragment extends Fragment implements MainActivity.TweetUpdateListener {
-    public static final String ARG_PAGE = "ARG_PAGE";
+public class TimelineFragment extends Fragment implements MainActivity.TweetUpdateListener, TweetAdapter.TweetItemListener {
 
     private TwitterClient client;
     TweetAdapter tweetAdapter;
@@ -56,7 +55,7 @@ public class TimelineFragment extends Fragment implements MainActivity.TweetUpda
 
         rvTweets = (RecyclerView) view.findViewById(R.id.rvTweet);
         tweets = new ArrayList<>();
-        tweetAdapter = new TweetAdapter(tweets);
+        tweetAdapter = new TweetAdapter(tweets, (TweetAdapter.TweetItemListener) this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(tweetAdapter);
@@ -150,5 +149,10 @@ public class TimelineFragment extends Fragment implements MainActivity.TweetUpda
             }
 
         });
+    }
+
+    @Override
+    public void onReplyButton(Tweet tweet) {
+        ((MainActivity) getContext()).startReplyActivity(tweet);
     }
 }

@@ -25,12 +25,18 @@ import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
+    public interface TweetItemListener {
+        public void onReplyButton(Tweet tweet);
+    }
+
     private List<Tweet> mTweets;
     Context context;
+    private TweetItemListener listener;
 
     // pass in the Tweets array in the constructor
-    public TweetAdapter(List<Tweet> tweets) {
+    public TweetAdapter(List<Tweet> tweets, TweetItemListener parentListener) {
         mTweets = tweets;
+        listener = parentListener;
     }
 
     // for each row, inflate the layout and cache references into ViewHolder
@@ -59,6 +65,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 mTweets.get(position).toggleFavorite(new JsonHttpResponseHandler());
                 updateButton(viewHolder.buttonFavorite, mTweets.get(position).isFavorited(), R.drawable.ic_vector_heart_stroke, R.drawable.ic_vector_heart, R.color.twitter_red);
                 viewHolder.tvFavoriteCount.setText(Long.toString(mTweets.get(position).getFavoriteCount()));
+            }
+        });
+
+        viewHolder.buttonReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onReplyButton(mTweets.get(viewHolder.getAdapterPosition()));
             }
         });
 
@@ -111,6 +124,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvFavoriteCount;
         public ImageButton buttonRetweet;
         public ImageButton buttonFavorite;
+        public ImageButton buttonReply;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -125,6 +139,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvFavoriteCount = (TextView) itemView.findViewById(R.id.tvFavoriteCount);
             buttonRetweet = (ImageButton) itemView.findViewById(R.id.buttonRetweet);
             buttonFavorite = (ImageButton) itemView.findViewById(R.id.buttonFavorite);
+            buttonReply = (ImageButton) itemView.findViewById(R.id.buttonReply);
         }
     }
 

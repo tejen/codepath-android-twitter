@@ -38,6 +38,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     private TwitterClient client;
     private final int COMPOSE_RESULT_CODE = 20;
+    private Tweet replyTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,12 @@ public class ComposeActivity extends AppCompatActivity {
         etBody = (RequiredEditText ) findViewById(R.id.etBody);
         tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
         buttonTweet = (Button) findViewById(R.id.buttonTweet);
+
+        if(getIntent().hasExtra(Tweet.class.getName())) {
+            replyTo = (Tweet) getIntent().getParcelableExtra(Tweet.class.getName());
+            etBody.setText("@" + replyTo.getUser().screenName + ": ");
+            etBody.setSelection(etBody.getText().length());
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ivProfileImage.setClipToOutline(true);
@@ -67,7 +74,11 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!formEnabled) return;
                 setTweetButtonEnabled(false);
-                client.postTweet(etBody.getText().toString(), new JsonHttpResponseHandler()  {
+                long inReplyTo = -1;
+                if(replyTo != null) {
+                    inReplyTo = replyTo.getId();
+                }
+                client.postTweet(etBody.getText().toString(), inReplyTo, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
