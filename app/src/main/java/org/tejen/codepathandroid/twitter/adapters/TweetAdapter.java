@@ -70,7 +70,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 int position = viewHolder.getAdapterPosition();
                 mTweets.get(position).toggleRetweet(new JsonHttpResponseHandler());
                 updateButton(viewHolder.buttonRetweet, mTweets.get(position).isRetweeted(), R.drawable.ic_vector_retweet_stroke, R.drawable.ic_vector_retweet, R.color.twitter_blue);
-                viewHolder.tvRetweetCount.setText(Long.toString(mTweets.get(position).getRetweetCount()));
+                viewHolder.tvRetweetCount.setText(Tweet.format(mTweets.get(position).getRetweetCount()));
             }
         });
 
@@ -80,7 +80,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 int position = viewHolder.getAdapterPosition();
                 mTweets.get(position).toggleFavorite(new JsonHttpResponseHandler());
                 updateButton(viewHolder.buttonFavorite, mTweets.get(position).isFavorited(), R.drawable.ic_vector_heart_stroke, R.drawable.ic_vector_heart, R.color.twitter_red);
-                viewHolder.tvFavoriteCount.setText(Long.toString(mTweets.get(position).getFavoriteCount()));
+                viewHolder.tvFavoriteCount.setText(Tweet.format(mTweets.get(position).getFavoriteCount()));
             }
         });
 
@@ -117,8 +117,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvUserScreenname.setText("@" + tweet.getUser().getScreenName());
         holder.tvBody.setText(tweet.getBody());
         holder.tvAge.setText(tweet.getRelativeTimeAgo());
-        holder.tvRetweetCount.setText(Long.toString(tweet.getRetweetCount()));
-        holder.tvFavoriteCount.setText(Long.toString(tweet.getFavoriteCount()));
+        holder.tvRetweetCount.setText(Tweet.format(tweet.getRetweetCount()));
+        holder.tvFavoriteCount.setText(Tweet.format(tweet.getFavoriteCount()));
         holder.ivVerifiedBadge.setVisibility(tweet.getUser().isVerified() ? View.VISIBLE : View.GONE);
         updateButton(holder.buttonRetweet, tweet.isRetweeted(), R.drawable.ic_vector_retweet_stroke, R.drawable.ic_vector_retweet, R.color.twitter_blue);
         updateButton(holder.buttonFavorite, tweet.isFavorited(), R.drawable.ic_vector_heart_stroke, R.drawable.ic_vector_heart, R.color.twitter_red);
