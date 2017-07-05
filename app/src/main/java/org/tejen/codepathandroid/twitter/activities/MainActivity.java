@@ -3,6 +3,7 @@ package org.tejen.codepathandroid.twitter.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -38,6 +39,11 @@ import java.util.ArrayList;
  */
 
 public class MainActivity extends AppCompatActivity {
+
+    public void startBrowserActivity(String mediaUrl) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mediaUrl));
+        startActivity(browserIntent);
+    }
 
     public interface TweetUpdateListener {
         void onComposedNewTweet(Tweet newTweet);

@@ -18,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 import org.tejen.codepathandroid.twitter.R;
 import org.tejen.codepathandroid.twitter.TwitterApp;
 import org.tejen.codepathandroid.twitter.data.Tweet;
@@ -56,7 +57,7 @@ public class ComposeActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra(Tweet.class.getName())) {
             replyTo = (Tweet) getIntent().getParcelableExtra(Tweet.class.getName());
-            etBody.setText("@" + replyTo.getUser().screenName + ": ");
+            etBody.setText("@" + replyTo.getUser().getScreenName() + ": ");
             etBody.setSelection(etBody.getText().length());
         }
 
@@ -67,7 +68,7 @@ public class ComposeActivity extends AppCompatActivity {
         User.getCurrentUser(new User.UserCallbackInterface() {
             @Override
             public void onUserAvailable(User currentUser) {
-                Glide.with(getContext()).load(currentUser.profileImageUrl).into(ivProfileImage);
+                Glide.with(getContext()).load(currentUser.getProfileImageUrl()).into(ivProfileImage);
             }
         });
 
@@ -94,7 +95,7 @@ public class ComposeActivity extends AppCompatActivity {
                         }
 
                         Intent i = new Intent();
-                        i.putExtra("newTweet", newTweet);
+                        i.putExtra("newTweet", Parcels.wrap(newTweet));
                         setResult(COMPOSE_RESULT_CODE, i);
                         finish();
                     }

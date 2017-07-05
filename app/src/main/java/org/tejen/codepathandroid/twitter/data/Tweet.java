@@ -1,5 +1,7 @@
 package org.tejen.codepathandroid.twitter.data;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -35,6 +37,8 @@ public class Tweet {
     private long favoriteCount;
     private boolean favorited;
 
+    private String mediaUrl = "";
+
     public long getId() {
         return uid;
     }
@@ -49,6 +53,7 @@ public class Tweet {
     public boolean isRetweeted() { return retweeted; }
     public boolean isFavorited() { return favorited; }
     public User getRetweetedBy() { return retweetedBy; }
+    public String getMediaUrl() { return mediaUrl; }
 
     public void toggleRetweet(JsonHttpResponseHandler handler) {
         TwitterApp.getRestClient().retweet(uid, retweeted ^= true, handler);
@@ -80,7 +85,22 @@ public class Tweet {
         tweet.retweetCount = jsonObject.getLong("retweet_count");
         tweet.favoriteCount = jsonObject.getLong("favorite_count");
 
+        if(jsonObject.has("entities")
+                && jsonObject.getJSONObject("entities").has("urls")
+                && jsonObject.getJSONObject("entities").getJSONArray("urls").length() > 0) {
+            String shortUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray("urls").get(0)).getString("url");
+            tweet.body.replace(" " + shortUrl, "");
+            tweet.mediaUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray("urls").get(0)).getString("expanded_url");
+        }
+
         return tweet;
+    }
+
+    public void getMediaThumbnail(final AsyncHttpResponseHandler handler) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://tejen.net/sub/codepath/twitter/ogimage.php?externalsite=" + mediaUrl, handler);
+//        client.get("http://tejen.net/sub/codepath/twitter/ogimage.php?externalsite=" + mediaUrl, handler);
+        // endpoint returns JSONObject with parameter "result" containing an image URL as String
     }
 
     public static ArrayList<Tweet> multipleFromJSON(JSONArray jsonArray) throws JSONException, ParseException{

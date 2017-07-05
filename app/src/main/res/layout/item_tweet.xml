@@ -105,9 +105,47 @@
         android:layout_marginTop="2dp"
         android:lineSpacingExtra="2dp"
         android:paddingRight="30dp"
-        android:text="TextView"
+        android:text="@string/sample_tweet_body"
         android:textColor="@android:color/black"
         android:textSize="16dp" />
+
+    <LinearLayout
+        android:id="@+id/llMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@id/tvBody"
+        android:layout_below="@id/tvBody"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_linearlayout"
+        android:orientation="vertical"
+        android:clipChildren="true">
+
+        <ImageView
+            android:id="@+id/ivMedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1px"
+            android:layout_marginStart="1px"
+            android:layout_marginTop="1px"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_sample_media_thumbnail" />
+
+        <TextView
+            android:id="@+id/tvMediaUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:text="pub-affairs.baps.org"
+            android:textColor="@color/twitter_gray" />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/buttonRetweet"
@@ -115,7 +153,7 @@
         android:layout_height="16dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/tvBody"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/llMedia"
         android:layout_marginBottom="-4dp"
         android:layout_marginStart="-4dp"
         android:layout_marginTop="12dp"

@@ -5,4 +5,5 @@
     <color name="twitter_lightgray">#f5f8fa</color>
     <color name="twitter_red">#e0245e</color>
     <color name="white">#FFFFFF</color>
+    <color name="translucent_highlighted">#4bFFFF00</color>
 </resources>

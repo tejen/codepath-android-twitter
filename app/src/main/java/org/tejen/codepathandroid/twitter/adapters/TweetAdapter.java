@@ -1,6 +1,8 @@
 package org.tejen.codepathandroid.twitter.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.tejen.codepathandroid.twitter.R;
+import org.tejen.codepathandroid.twitter.activities.MainActivity;
 import org.tejen.codepathandroid.twitter.data.Tweet;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by tejen on 6/6/17.
@@ -75,6 +88,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             }
         });
 
+        viewHolder.llMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) context).startBrowserActivity(mTweets.get(viewHolder.getAdapterPosition()).getMediaUrl());
+            }
+        });
+
         return viewHolder;
     }
 
@@ -85,7 +105,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     // bind the values based on the position of the element
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // get the data according to position
         Tweet tweet = mTweets.get(position);
 
@@ -105,8 +125,53 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             holder.tvRetweetedBy.setVisibility(View.VISIBLE);
             holder.tvRetweetedBy.setText(tweet.getRetweetedBy().getName() + " Retweeted");
         } else {
-//            holder.ivRetweetedIcon.setVisibility(View.GONE);
-//            holder.tvRetweetedBy.setVisibility(View.GONE);
+            holder.ivRetweetedIcon.setVisibility(View.GONE);
+            holder.tvRetweetedBy.setVisibility(View.GONE);
+        }
+
+        if(!tweet.getMediaUrl().isEmpty()) {
+            holder.llMedia.setVisibility(View.GONE);
+            try {
+                holder.tvMediaUrl.setText((new URL(tweet.getMediaUrl())).getHost());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            tweet.getMediaThumbnail(new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    try {
+                        String responseString = new String(responseBody, getCharset());
+                        JSONObject response = new JSONObject(responseString);
+                        if(response.has("result")) {
+                            try {
+                                AsyncHttpClient client = new AsyncHttpClient();
+                                client.get(response.getString("result"), null, new AsyncHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, byte[] fileData) {
+                                        Bitmap image = BitmapFactory.decodeByteArray(fileData, 0, fileData.length);
+                                        holder.ivMedia.setImageBitmap(ImageHelper.getRoundedCornerBitmap(image, 10));
+                                        holder.llMedia.setVisibility(View.VISIBLE);
+                                    }
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                    }
+                                });
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (UnsupportedEncodingException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                }
+            });
+        } else {
+            holder.llMedia.setVisibility(View.GONE);
         }
 
         Glide.with(context).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfileImage);
@@ -133,6 +198,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public ImageButton buttonFavorite;
         public ImageButton buttonReply;
         public ImageView ivVerifiedBadge;
+        public LinearLayout llMedia;
+        public ImageView ivMedia;
+        public TextView tvMediaUrl;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -151,6 +219,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             buttonFavorite = (ImageButton) itemView.findViewById(R.id.buttonFavorite);
             buttonReply = (ImageButton) itemView.findViewById(R.id.buttonReply);
             ivVerifiedBadge = (ImageView) itemView.findViewById(R.id.ivVerifiedBadge);
+            llMedia = (LinearLayout) itemView.findViewById(R.id.llMedia);
+            ivMedia = (ImageView) itemView.findViewById(R.id.ivMedia);
+            tvMediaUrl = (TextView) itemView.findViewById(R.id.tvMediaUrl);
 
             // define standard attributes
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -179,3 +250,4 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
 }
+

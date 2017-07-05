@@ -21,5 +21,6 @@
     <string name="dummy_screenname">\@TejenPatel</string>
     <string name="dummy_name">Tejen Patel</string>
     <string name="separatorSymbol">•</string>
+    <string name="sample_tweet_body"><![CDATA[Learn how @BAPS encourages civic participation & dialogue with elected officials and public servants in the US by following @BAPS_PubAffairs]]></string>
 
 </resources>
