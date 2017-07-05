@@ -117,9 +117,10 @@
         android:layout_alignStart="@id/tvBody"
         android:layout_below="@id/tvBody"
         android:layout_marginEnd="15dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_linearlayout"
-        android:orientation="vertical"
-        android:clipChildren="true">
+        android:clipChildren="true"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/ivMedia"
@@ -129,10 +130,10 @@
             android:layout_marginStart="1px"
             android:layout_marginTop="1px"
             android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:cropToPadding="true"
             android:padding="0dp"
             android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
             android:src="@drawable/ic_sample_media_thumbnail" />
 
         <TextView

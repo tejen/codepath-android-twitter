@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +47,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     private List<Tweet> mTweets;
     Context context;
     private TweetItemListener listener;
+    private static int defaultMediaWidth = 250;
 
     // pass in the Tweets array in the constructor
     public TweetAdapter(List<Tweet> tweets, TweetItemListener parentListener) {
@@ -130,7 +133,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         }
 
         if(!tweet.getMediaUrl().isEmpty()) {
-            holder.llMedia.setVisibility(View.GONE);
+            holder.llMedia.setVisibility(View.INVISIBLE);
             try {
                 holder.tvMediaUrl.setText((new URL(tweet.getMediaUrl())).getHost());
             } catch (MalformedURLException e) {
@@ -142,14 +145,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     try {
                         String responseString = new String(responseBody, getCharset());
                         JSONObject response = new JSONObject(responseString);
-                        if(response.has("result")) {
+                        if(response.has("result") && !response.getString("result").isEmpty()) {
                             try {
                                 AsyncHttpClient client = new AsyncHttpClient();
                                 client.get(response.getString("result"), null, new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] fileData) {
                                         Bitmap image = BitmapFactory.decodeByteArray(fileData, 0, fileData.length);
-                                        holder.ivMedia.setImageBitmap(ImageHelper.getRoundedCornerBitmap(image, 10));
+                                        float aspectRatio = image.getWidth() /
+                                                (float) image.getHeight();
+                                        int width = TweetAdapter.defaultMediaWidth;
+                                        Log.i("WIDTH", Integer.toString(width));
+                                        int height = Math.round(width / aspectRatio);
+                                        image = Bitmap.createScaledBitmap(
+                                                image, width, height, false);
+                                        holder.ivMedia.setImageDrawable(ImageHelper.getRoundedCornerBitmap(image, 10, context.getResources()));
                                         holder.llMedia.setVisibility(View.VISIBLE);
                                     }
                                     @Override
@@ -160,6 +170,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        } else {
+                            holder.llMedia.setVisibility(View.GONE);
                         }
                     } catch (UnsupportedEncodingException | JSONException e) {
                         e.printStackTrace();
@@ -222,6 +234,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             llMedia = (LinearLayout) itemView.findViewById(R.id.llMedia);
             ivMedia = (ImageView) itemView.findViewById(R.id.ivMedia);
             tvMediaUrl = (TextView) itemView.findViewById(R.id.tvMediaUrl);
+
+            if(TweetAdapter.defaultMediaWidth == 250) {
+                ivMedia.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        TweetAdapter.defaultMediaWidth = ivMedia.getWidth();
+                        ivMedia.getViewTreeObserver().removeOnPreDrawListener(this);
+                        return true;
+                    }
+                });
+            }
 
             // define standard attributes
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -85,12 +85,24 @@ public class Tweet {
         tweet.retweetCount = jsonObject.getLong("retweet_count");
         tweet.favoriteCount = jsonObject.getLong("favorite_count");
 
-        if(jsonObject.has("entities")
-                && jsonObject.getJSONObject("entities").has("urls")
-                && jsonObject.getJSONObject("entities").getJSONArray("urls").length() > 0) {
-            String shortUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray("urls").get(0)).getString("url");
-            tweet.body.replace(" " + shortUrl, "");
-            tweet.mediaUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray("urls").get(0)).getString("expanded_url");
+        if(jsonObject.has("entities")) {
+            String shortUrl = null;
+            String expandedUrl = null;
+            String[] entityTypes = { "urls", "media" }; // we're supporting two entity types. prioritized last to first (app will display media rather than url, if both exist in a single tweet)
+            for (String type: entityTypes) {
+                if(jsonObject.getJSONObject("entities").has(type)
+                        && jsonObject.getJSONObject("entities").getJSONArray(type).length() > 0) {
+                    shortUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray(type).get(0)).getString("url");
+                    expandedUrl = ((JSONObject) jsonObject.getJSONObject("entities").getJSONArray(type).get(0)).getString("expanded_url");
+                    for (int i = 0; i < jsonObject.getJSONObject("entities").getJSONArray(type).length(); i++) {
+                        tweet.body = tweet.body.replace(((JSONObject) jsonObject.getJSONObject("entities").getJSONArray(type).get(i)).getString("url"), "");
+                    }
+                }
+            }
+            if(shortUrl != null && expandedUrl != null) {
+                tweet.body = tweet.body.replace(" " + shortUrl, "");
+                tweet.mediaUrl = expandedUrl;
+            }
         }
 
         return tweet;
@@ -99,7 +111,6 @@ public class Tweet {
     public void getMediaThumbnail(final AsyncHttpResponseHandler handler) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://tejen.net/sub/codepath/twitter/ogimage.php?externalsite=" + mediaUrl, handler);
-//        client.get("http://tejen.net/sub/codepath/twitter/ogimage.php?externalsite=" + mediaUrl, handler);
         // endpoint returns JSONObject with parameter "result" containing an image URL as String
     }
 
