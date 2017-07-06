@@ -239,7 +239,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 ivMedia.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        TweetAdapter.defaultMediaWidth = ivMedia.getWidth();
+                        if(ivMedia.getWidth() > 0) {
+                            TweetAdapter.defaultMediaWidth = ivMedia.getWidth();
+                        }
                         ivMedia.getViewTreeObserver().removeOnPreDrawListener(this);
                         return true;
                     }
