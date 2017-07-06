@@ -7,13 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +25,9 @@ import org.tejen.codepathandroid.twitter.data.TwitterClient;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.Header;
+public abstract class TweetsListFragment extends Fragment implements MainActivity.TweetUpdateListener, TweetAdapter.TweetItemListener {
 
-public class TweetsListFragment extends Fragment implements MainActivity.TweetUpdateListener, TweetAdapter.TweetItemListener {
-
-    private TwitterClient client;
+    TwitterClient client;
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
@@ -114,10 +109,9 @@ public class TweetsListFragment extends Fragment implements MainActivity.TweetUp
         Toast.makeText(getActivity(), "Posted New Tweet!", Toast.LENGTH_SHORT).show();
     }
 
-    public void fetchTimelineAsync(final boolean fetchMore) {
+    public void fetchTimelineAsync(boolean fetchMore) {
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
-        // getHomeTimeline is an example endpoint.
 
         long max_id;
 
@@ -128,30 +122,26 @@ public class TweetsListFragment extends Fragment implements MainActivity.TweetUp
             max_id--; // Twitter max_id param will otherwise include the tweet matching id in max_id param
         }
 
-        client.getHomeTimeline(max_id, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                // Remember to CLEAR OUT old items before appending in the new ones
-                // ...the data has come back, add new items to your adapter...
-                try {
-                    if(fetchMore == false) {
-                        tweetAdapter.clear();
-                    }
-                    tweetAdapter.addAll(Tweet.multipleFromJSON(response));
-                    // Now we call setRefreshing(false) to signal refresh has finished
-                    swipeContainer.setRefreshing(false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
+        finishTimelineFetch(max_id, fetchMore);
+    }
 
-            public void onFailure(Throwable e) {
-                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
-            }
+    abstract void finishTimelineFetch(long max_id, final boolean fetchMore);
 
-        });
+    void replaceAdapterWith(JSONArray response, boolean fetchMore) {
+        // Remember to CLEAR OUT old items before appending in the new ones
+        // ...the data has come back, add new items to your adapter...
+        try {
+            if(fetchMore == false) {
+                tweetAdapter.clear();
+            }
+            tweetAdapter.addAll(Tweet.multipleFromJSON(response));
+            // Now we call setRefreshing(false) to signal refresh has finished
+            swipeContainer.setRefreshing(false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
