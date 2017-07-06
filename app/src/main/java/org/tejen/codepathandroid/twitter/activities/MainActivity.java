@@ -64,18 +64,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvUserName;
     private TextView tvUserScreenname;
 
-    private int[] tabIconsSelected = {
-            R.drawable.ic_vector_home,
-            R.drawable.ic_vector_search,
-            R.drawable.ic_vector_notifications,
-            R.drawable.ic_vector_messages
-    };
-
-    private int[] tabIconsUnselected = {
-            R.drawable.ic_vector_home_stroke,
-            R.drawable.ic_vector_search_stroke,
-            R.drawable.ic_vector_notifications_stroke,
-            R.drawable.ic_vector_messages_stroke
+    private int[] tabIcons = {
+            R.drawable.ic_home_tab_icon,
+            R.drawable.ic_search_tab_icon,
+            R.drawable.ic_notifications_tab_icon,
+            R.drawable.ic_messages_tab_icon
     };
 
     @Override
@@ -129,27 +122,11 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(tabIconsSelected[0]);
-        for (int i = 1; i < tabIconsUnselected.length; i++) {
-            tabLayout.getTabAt(i).setIcon(tabIconsUnselected[i]);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            for (int i = 0; i < tabIcons.length; i++) {
+                tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+            }
         }
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                tabLayout.getTabAt(tab.getPosition()).setIcon(tabIconsSelected[tab.getPosition()]);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                tabLayout.getTabAt(tab.getPosition()).setIcon(tabIconsUnselected[tab.getPosition()]);
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         mListeners = new ArrayList<>();
     }
