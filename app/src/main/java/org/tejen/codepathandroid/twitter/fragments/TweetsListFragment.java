@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineFragment extends Fragment implements MainActivity.TweetUpdateListener, TweetAdapter.TweetItemListener {
+public class TweetsListFragment extends Fragment implements MainActivity.TweetUpdateListener, TweetAdapter.TweetItemListener {
 
     private TwitterClient client;
     TweetAdapter tweetAdapter;
