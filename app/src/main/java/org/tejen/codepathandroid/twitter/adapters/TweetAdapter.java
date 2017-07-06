@@ -239,6 +239,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 ivMedia.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
+                        // TODO if enabling horizontal orientation then this width needs to be re-fetched/re-cached upon changing device orientation
                         if(ivMedia.getWidth() > 0) {
                             TweetAdapter.defaultMediaWidth = ivMedia.getWidth();
                         }
